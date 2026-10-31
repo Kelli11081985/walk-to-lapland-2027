@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Walk to Lapland</title>
+<meta name="description" content="Our group walk from Bedfordshire to Santa's home in Lapland, 1 November to 19 December.">
+<meta name="theme-color" content="#2E5B4C">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: snowy header with fairy lights, steps first (one big box, one big button), then the map with our walker, then the doors wrapped as presents. Green, white, berry red and gold. */
+:root{
+  --green:#2E5B4C; --green-mid:#4E8170; --green-soft:#DCEBE3; --sea:#EAF3EE;
+  --white:#FFFFFF; --page:#F6FAF8; --ink:#1B2924; --muted:#5D6E67; --line:#C9DACF;
+  --red:#C8553D; --berry:#A8322A; --gold:#D9A441; --error:#A8321F;
+  --display:"Fraunces",Georgia,"Times New Roman",serif;
+  --body:"Work Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;padding-bottom:env(safe-area-inset-bottom,0px);overflow-x:hidden}
+[hidden]{display:none!important}
+h1,h2,h3,h4{font-family:var(--display);font-weight:700;margin:0;line-height:1.1;text-wrap:balance}
+p{margin:0}
+button{font:inherit;color:inherit}
+.inner{max-width:600px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+.band{position:relative;overflow:hidden;background:var(--green);color:var(--white);padding-top:env(safe-area-inset-top,0px)}
+.snow{position:absolute;left:0;right:0;top:-240px;bottom:0;pointer-events:none;background-image:radial-gradient(circle,rgba(255,255,255,.95) 1.6px,transparent 2.2px),radial-gradient(circle,rgba(255,255,255,.55) 1px,transparent 1.6px);background-size:64px 64px,38px 38px;background-position:0 0,17px 21px;animation:snow 9s linear infinite}
+@keyframes snow{to{background-position:0 128px,17px 97px}}
+.lights{position:relative;z-index:1;max-width:600px;margin:0 auto;height:30px}
+.lights svg{display:block;width:100%;height:30px}
+.bulb{animation:twinkle 2.4s ease-in-out infinite}
+.bulb:nth-of-type(3n){animation-delay:.8s}
+.bulb:nth-of-type(3n+1){animation-delay:1.6s}
+@keyframes twinkle{50%{opacity:.35}}
+.hills{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:34px;pointer-events:none}
+.band .inner{position:relative;z-index:1;padding-block:6px 74px;display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+.band h1{font-size:clamp(1.9rem,8vw,2.6rem)}
+.band small{display:block;font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.band .togo{text-align:right;font-size:.85rem;opacity:.9;line-height:1.3}
+.band .togo b{display:block;font-family:var(--display);font-size:1.5rem;opacity:1}
+
+main{display:flex;flex-direction:column;gap:22px;margin-top:-56px;padding-bottom:48px}
+.card{background:var(--white);border-radius:22px;box-shadow:0 8px 28px rgba(27,41,36,.10);padding:20px;display:flex;flex-direction:column;gap:14px}
+.card h2{font-size:1.5rem}
+
+/* Logging */
+.steps-box{display:flex;flex-direction:column;gap:10px}
+.steps-box input{width:100%;font-family:var(--display);font-weight:700;font-size:2.6rem;text-align:center;font-variant-numeric:tabular-nums;padding:14px;border-radius:16px;border:2px solid var(--line);background:var(--page);color:var(--ink);-moz-appearance:textfield}
+.steps-box input::-webkit-outer-spin-button,.steps-box input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.steps-box input:focus{outline:none;border-color:var(--green)}
+.steps-box input::placeholder{color:#B5C6BD}
+.btn{border:0;border-radius:16px;background:var(--green);color:var(--white);font-weight:700;font-size:1.15rem;padding:16px 20px;min-height:58px;cursor:pointer;width:100%}
+.btn:active{transform:scale(.99)}
+.btn:disabled{opacity:.6;cursor:wait}
+.btn.soft{background:var(--green-soft);color:var(--green)}
+.btn:focus-visible,.link:focus-visible,.door:focus-visible,.stop:focus-visible,select:focus-visible,.steps-box input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.link{background:none;border:0;padding:0;color:var(--green);font-weight:600;text-decoration:underline;text-underline-offset:3px;cursor:pointer;font-size:.95rem}
+.day-row{display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap;font-size:.95rem;color:var(--muted)}
+select{font:inherit;padding:10px 12px;border-radius:12px;border:2px solid var(--line);background:var(--page);color:var(--ink);max-width:100%}
+.msg{text-align:center;font-size:.95rem;font-weight:600;min-height:1.4em}
+.msg.err{color:var(--error)}
+.win{background:var(--berry);color:var(--white);border-radius:16px;padding:16px;text-align:center;display:flex;flex-direction:column;gap:4px;animation:pop .45s ease}
+.win b{font-family:var(--display);font-size:1.8rem}
+.win .link{color:var(--white);font-size:.9rem;margin-top:4px}
+@keyframes pop{0%{transform:scale(.9);opacity:0}100%{transform:scale(1);opacity:1}}
+.today{display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--line);padding-top:14px}
+.today-top{display:flex;justify-content:space-between;gap:10px;font-size:.92rem;flex-wrap:wrap}
+.today-top b{font-variant-numeric:tabular-nums}
+.mini{height:18px;border-radius:99px;background:var(--green-soft);overflow:hidden;box-shadow:inset 0 0 0 1px var(--line)}
+.mini span{display:block;height:100%;border-radius:99px;background:repeating-linear-gradient(-45deg,var(--berry) 0 9px,#FFFFFF 9px 18px);box-shadow:inset 0 0 0 1.5px var(--berry);transition:width 1.4s cubic-bezier(.2,.8,.2,1)}
+.left-num{font-family:var(--display);font-weight:700;font-size:1.6rem;font-variant-numeric:tabular-nums;color:var(--berry)}
+.note{font-size:.88rem;color:var(--muted)}
+.note b{color:var(--ink);font-variant-numeric:tabular-nums}
+
+/* Map */
+.where{display:flex;flex-direction:column;gap:4px}
+.where .big{font-family:var(--display);font-weight:700;font-size:1.6rem;line-height:1.15}
+.where .big em{font-style:normal;color:var(--green)}
+.mapbox{border-radius:16px;overflow:hidden;background:var(--sea)}
+.mapbox svg{display:block;width:100%;height:auto}
+.c-label{font-family:var(--body);font-size:11px;font-weight:700;fill:var(--ink);paint-order:stroke;stroke:var(--white);stroke-width:3.5px;stroke-linejoin:round}
+.c-label.dim{fill:var(--muted);font-weight:600}
+.country{font-family:var(--display);font-style:italic;font-size:11px;fill:#9DB3A8}
+.sea-l{font-family:var(--display);font-style:italic;font-size:10px;fill:#8FB3A2;letter-spacing:.06em}
+.prog{display:flex;flex-direction:column;gap:6px}
+.prog-bar{position:relative;height:14px;border-radius:99px;background:var(--green-soft)}
+.prog-bar .fill{position:absolute;left:0;top:0;bottom:0;border-radius:99px;background:repeating-linear-gradient(-45deg,var(--green) 0 8px,#4E8170 8px 16px);transition:width .8s ease}
+.prog-bar .tick{position:absolute;top:3px;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:var(--white);border:2px solid var(--green-mid)}
+.prog-bar .tick.on{background:var(--gold);border-color:var(--gold)}
+.prog-ends{display:flex;justify-content:space-between;font-size:.82rem;color:var(--muted);font-variant-numeric:tabular-nums}
+
+.stops{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.stop{display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.stop:first-child{border-top:0}
+.stamp{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:.95rem;border:2px dashed var(--line);color:var(--muted);background:var(--white)}
+.stop.got .stamp{border:2px solid var(--gold);background:#FBF1DC;color:#8A6416;transform:rotate(-8deg)}
+.stop.next .stamp{border:2px solid var(--green);color:var(--green)}
+.stop-name{font-weight:700}
+.stop-fact{font-size:.86rem;color:var(--muted)}
+.stop-km{font-size:.85rem;font-weight:600;color:var(--muted);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.stop.next .stop-km{color:var(--green)}
+.stop.got .stop-km{color:#8A6416}
+
+/* Doors */
+.doors{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (min-width:520px){.doors{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.door{position:relative;text-align:left;border:0;border-radius:16px;padding:12px;min-height:128px;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;gap:6px;cursor:pointer;color:var(--ink);transition:transform .15s ease;
+  background-color:var(--green);
+  background-image:linear-gradient(90deg,transparent calc(50% - 7px),var(--gold) calc(50% - 7px),var(--gold) calc(50% + 7px),transparent calc(50% + 7px)),linear-gradient(0deg,transparent calc(50% - 7px),var(--gold) calc(50% - 7px),var(--gold) calc(50% + 7px),transparent calc(50% + 7px))}
+.door:nth-child(even){background-color:var(--berry)}
+.door .num{position:relative;z-index:1;width:44px;height:44px;border-radius:50%;background:var(--white);display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:1.35rem;line-height:1;color:var(--green);box-shadow:0 2px 0 rgba(0,0,0,.15)}
+.door:nth-child(even) .num{color:var(--berry)}
+.door .lbl{position:relative;z-index:1;font-size:.8rem;font-weight:700;background:var(--white);border-radius:99px;padding:4px 10px;color:var(--ink)}
+.door .bow{position:absolute;top:-4px;left:50%;transform:translateX(-50%);width:46px;height:24px}
+.door.new{box-shadow:0 0 0 3px var(--gold);animation:glow 1.8s ease-in-out infinite}
+.door:hover:not(.locked){transform:translateY(-2px) rotate(-1deg)}
+@keyframes glow{50%{box-shadow:0 0 0 3px var(--gold),0 0 0 9px rgba(217,164,65,.3)}}
+.door.locked,.door.locked:nth-child(even){background-color:var(--green-soft);background-image:linear-gradient(90deg,transparent calc(50% - 7px),#C9DACF calc(50% - 7px),#C9DACF calc(50% + 7px),transparent calc(50% + 7px)),linear-gradient(0deg,transparent calc(50% - 7px),#C9DACF calc(50% - 7px),#C9DACF calc(50% + 7px),transparent calc(50% + 7px));cursor:default}
+.door.locked .num,.door.locked .lbl{color:var(--muted)}
+.taps{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:8px}
+.taps li b{color:var(--green)}
+
+/* Door dialog */
+dialog{border:0;padding:0;border-radius:24px;width:min(480px,calc(100vw - 24px));max-height:calc(100dvh - 32px);overflow:auto;background:var(--white);color:var(--ink);box-shadow:0 24px 60px rgba(0,0,0,.28)}
+dialog::backdrop{background:rgba(27,41,36,.6)}
+.dlg{display:flex;flex-direction:column}
+.dlg-card{background:var(--green);color:var(--white);padding:26px 24px 24px;display:flex;flex-direction:column;gap:14px;position:relative}
+.dlg-card .tag{font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+.dlg-card .verse{font-family:var(--display);font-style:italic;font-size:1.22rem;line-height:1.55;white-space:pre-line}
+.dlg-card .ask{font-family:var(--display);font-weight:700;font-size:1.15rem}
+.dlg-card .sig{font-size:.78rem;opacity:.75}
+.x{position:absolute;top:14px;right:14px;border:0;background:rgba(255,255,255,.16);color:var(--white);width:38px;height:38px;border-radius:50%;font-size:1.3rem;line-height:1;cursor:pointer}
+.dlg-body{padding:20px 24px 24px;display:flex;flex-direction:column;gap:12px}
+.answer-tag{font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red)}
+.dlg-body h4{font-size:1.45rem;color:var(--green)}
+.week{background:var(--green-soft);border-radius:14px;padding:14px;font-weight:600;color:var(--green)}
+.pocket-list{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px}
+
+.foot{text-align:center;font-size:.85rem;color:var(--muted)}
+.confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:50}
+.confetti i{position:absolute;top:-12px;width:8px;height:12px;border-radius:2px;animation:fall 1.8s ease-in forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(540deg);opacity:.9}}
+@media (prefers-reduced-motion:reduce){.snow,.bulb{animation:none}.mini span{transition:none}.win,.door.new{animation:none}.prog-bar .fill{transition:none}.confetti{display:none}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<dialog id="dlg" aria-labelledby="dlg-title"><div class="dlg" id="dlg-body"></div></dialog>
+<script>
+(function(){
+var API = '/api/steps';
+var STRIDE_KM = 0.00075;   // average step = 0.75 m
+var START_ISO = '2026-11-01', END_ISO = '2026-12-19', LOG_CLOSE_ISO = '2026-12-26', POCKET_ISO = '2026-12-20';
+var PREVIEW = /[?&]preview\b/.test(location.search);
+
+/* ---------- The route (straight-line distances, km from Bedfordshire) ---------- */
+var STOPS = [
+  {name:'Bedfordshire', country:'Start', lon:-0.47, lat:52.14, km:0, fact:'Where it all begins. Lace up!', lx:-8, ly:-8, a:'end'},
+  {name:'London', country:'England', lon:-0.13, lat:51.51, km:75, fact:'The first ever Christmas card was sent from London, in 1843.', lx:-8, ly:12, a:'end'},
+  {name:'Brussels', country:'Belgium', lon:4.35, lat:50.85, km:395, fact:'Home of waffles, chocolate and a giant Christmas tree in the Grand Place.', lx:0, ly:17, a:'middle'},
+  {name:'Amsterdam', country:'Netherlands', lon:4.90, lat:52.37, km:568, fact:'There are more bikes in Amsterdam than people.', lx:-4, ly:-9, a:'middle'},
+  {name:'Hamburg', country:'Germany', lon:9.99, lat:53.55, km:933, fact:'Hamburg has more bridges than Venice and Amsterdam put together.', lx:2, ly:17, a:'middle'},
+  {name:'Copenhagen', country:'Denmark', lon:12.57, lat:55.68, km:1221, fact:'Tivoli Gardens has been lighting up Copenhagen since 1843.', lx:9, ly:4, a:'start'},
+  {name:'Stockholm', country:'Sweden', lon:18.07, lat:59.33, km:1743, fact:'Stockholm is built across 14 islands.', lx:9, ly:4, a:'start'},
+  {name:'Rovaniemi', country:'Lapland, Finland', lon:25.72, lat:66.50, km:2629, fact:'Santa’s official hometown, right on the Arctic Circle. We did it!', lx:-10, ly:16, a:'end'}
+];
+var GOAL_KM = STOPS[STOPS.length-1].km;
+
+/* ---------- The weekly doors: a new one every Sunday ---------- */
+function D(m,d){ return new Date(2026,m,d); }
+var DOORS = [
+ {start:D(10,1),
+  verse:'I’m not a diet, I’m not a rule,\nI\u2019m a one-to-ten listening tool.\nFrom “I could eat a horse”\nto “I need a lie down,”\nI help you tune in,\nno need for a frown.',
+  ask:'What am I?', answer:'Your hunger scale',
+  recap:'Before you eat, give your hunger a number from 1 to 10. There’s no right answer. It’s information, not a rule.',
+  week:'Use your hunger scale all week. Check your number before every meal and snack, and notice it again when you finish.'},
+ {start:D(10,8),
+  verse:'A craving rolls in\nlike a wave from the sea.\nIt rises, it peaks,\nthen it fades, wait and see.\nNo need to fight it,\nor dive in head first.\nJust grab your board, breathe,\nand ride out the burst.',
+  ask:'What am I?', answer:'Surfing the urge',
+  recap:'When a craving hits, you don\u2019t have to fight it or act on it straight away. Notice where you feel it in your body, breathe, and watch it rise, peak and fall, like a wave. Riding it out is the win, whatever you decide after.',
+  week:'Surf at least one urge this week. Notice how it changed as you rode it.'},
+ {start:D(10,15),
+  verse:'A tap on the eyebrow,\na tap on the chin,\nyou might look a bit silly,\nbut calm settles in.\nWhen the food noise is louder\nthan a Christmas shop queue,\njust a few little taps\nand it quietens for you.',
+  ask:'What am I?', answer:'Tapping',
+  recap:'Rate the food noise out of 10. Then use two fingers to tap each point about 7 times while you say the words.',
+  taps:[['Side of hand','\u201CEven though I\u2019ve got all this food noise, I\u2019m OK and I accept myself.\u201D (say it 3 times)'],['Eyebrow','\u201CThis food noise.\u201D'],['Side of eye','\u201CIt feels so loud.\u201D'],['Under eye','\u201CThis pull towards food.\u201D'],['Under nose','\u201CI don\u2019t have to act on it.\u201D'],['Chin','\u201CI can let it settle.\u201D'],['Collarbone','\u201CI\u2019m safe to feel this.\u201D'],['Under arm','\u201CI\u2019m letting it go.\u201D'],['Top of head','\u201CI\u2019m choosing calm.\u201D']],
+  week:'When the noise gets loud, do one round. Rate it out of 10 before and after.'},
+ {start:D(10,22),
+  verse:'I’m the voice at the cupboard\nat quarter past nine.\nI\u2019m not here for trouble,\nI\u2019m just out of time.\nA cuddle, a bath\nor an early night\nmight be what I need\nmore than one more bite.',
+  ask:'Who am I?', answer:'The part of you that wants the food',
+  recap:'That part isn’t the enemy. It’s trying to help. Get curious: is it rest, comfort, company or a break it’s after?',
+  week:'When you want food and you’re not hungry, ask: what does this part of me need?'},
+ {start:D(10,29),
+  verse:'I’m grumpy and bossy,\nI’ve far too much to say,\nI judge every outfit\nand rain on your day.\nBut answer me kindly,\nlike your best friend might,\nand I shrink to the size\nof a fairy light.',
+  ask:'Who am I?', answer:'Your inner critic',
+  recap:'Catch the critic’s exact words, then answer them the way you’d answer your best friend.',
+  week:'Write down one critic line, and your kinder reply underneath.'},
+ {start:D(11,6),
+  verse:'The sausage rolls wink,\nthere’s a tin on the side,\nthe music is playing,\nthe buffet is wide.\nBut before you head in,\nthere’s one thing to bring.\nIt’s not a food plan,\nit’s a much better thing.',
+  ask:'What do you bring to every Christmas food occasion?', answer:'Your values',
+  recap:'Before a Christmas meal, buffet or get-together, decide how you want to show up: present, laughing, in the room. The food is part of the night, not the whole night.',
+  week:'Before each Christmas food occasion, pick one word for how you want to be. Check in with it on the way home.'},
+ {start:D(11,13),
+  verse:'You’ve walked half of Europe,\nyou\u2019ve surfed and you\u2019ve tapped,\nyou’ve chatted to the critic\ntill it finally napped.\nThe mince pies are coming,\nthe cheese and the cake.\nNo rules and no January\n“fresh start” to make.',
+  ask:'So who can you trust with Christmas?', answer:'You',
+  recap:'You already have the tools. Christmas food is just food, and you can trust yourself around it, with nothing to make up for in January.',
+  week:'Before the 25th, write down the three tools you’ll lean on most over the break.'}
+];
+
+/* ---------- A simple hand-drawn Europe (lon, lat) ---------- */
+var LAND = [
+ // Great Britain
+ [[1.4,51.1],[0.3,50.8],[-1.1,50.7],[-2.4,50.6],[-3.5,50.4],[-4.2,50.3],[-5.7,50.0],[-5.0,50.6],[-4.2,51.2],[-3.0,51.4],[-4.3,51.6],[-5.2,51.7],[-4.2,52.3],[-4.1,52.9],[-4.6,52.8],[-4.3,53.4],[-3.0,53.4],[-3.0,54.0],[-3.4,54.5],[-3.1,54.9],[-4.4,54.7],[-5.0,54.9],[-4.8,55.6],[-5.6,55.4],[-5.6,56.2],[-5.9,56.8],[-5.6,57.6],[-5.1,58.2],[-5.0,58.6],[-3.1,58.6],[-3.0,58.3],[-4.0,57.9],[-3.3,57.7],[-1.8,57.6],[-2.1,57.1],[-2.5,56.6],[-3.2,56.1],[-2.6,56.0],[-1.6,55.6],[-1.4,54.9],[-0.6,54.5],[-0.1,54.1],[0.1,53.5],[0.3,53.1],[1.0,52.95],[1.7,52.7],[1.6,52.1],[1.1,51.8],[0.6,51.5],[1.4,51.4]],
+ // Ireland
+ [[-6.0,52.2],[-6.4,53.0],[-6.1,53.5],[-6.0,54.0],[-5.5,54.3],[-5.9,55.0],[-6.9,55.2],[-7.7,55.2],[-8.4,54.6],[-8.6,54.2],[-10.0,54.2],[-9.6,53.5],[-10.1,53.3],[-9.0,53.2],[-9.8,52.6],[-10.4,52.1],[-9.8,51.6],[-8.5,51.6],[-7.0,52.1]],
+ // Mainland Europe, Scandinavia and Finland
+ [[-4.7,48.4],[-3.0,48.8],[-1.6,48.7],[-1.6,49.7],[-1.1,49.4],[0.2,49.5],[1.6,50.2],[2.5,51.1],[3.4,51.4],[3.9,51.9],[4.6,52.6],[4.8,53.0],[5.6,53.4],[7.0,53.6],[8.2,53.5],[8.6,53.9],[8.9,54.4],[8.6,55.0],[8.1,55.5],[8.2,56.6],[8.6,57.1],[9.6,57.5],[10.6,57.7],[10.4,57.0],[10.3,56.3],[10.9,56.4],[10.2,55.8],[9.8,55.3],[9.9,54.8],[10.9,54.4],[11.1,54.0],[12.4,54.3],[13.4,54.6],[14.2,53.9],[16.0,54.3],[17.5,54.8],[18.6,54.4],[19.6,54.4],[21.1,55.3],[21.0,56.5],[21.6,57.4],[22.6,57.6],[23.7,57.0],[24.3,57.3],[24.0,58.4],[23.5,59.2],[25.5,59.6],[28.0,59.5],[30.2,59.9],[28.9,60.6],[26.9,60.4],[25.0,60.2],[23.0,59.9],[22.4,60.4],[21.4,60.7],[21.4,61.6],[21.6,62.5],[22.2,63.2],[23.5,64.0],[24.6,64.8],[25.4,65.3],[24.6,65.8],[23.6,65.8],[22.4,65.8],[21.6,65.4],[21.1,64.8],[21.4,64.4],[20.2,63.7],[19.0,63.2],[18.0,62.6],[17.4,62.3],[17.2,61.3],[17.3,60.7],[18.5,60.2],[19.0,59.7],[18.0,59.0],[16.8,58.6],[16.6,57.8],[16.4,56.7],[15.9,56.1],[14.7,56.2],[14.2,55.4],[12.9,55.4],[12.4,56.0],[12.8,56.6],[11.9,57.5],[11.5,58.3],[11.2,59.1],[10.6,59.9],[10.2,59.1],[9.4,58.7],[8.1,58.1],[6.6,58.1],[5.5,58.7],[5.3,59.3],[5.0,60.2],[5.0,61.0],[5.0,61.9],[5.9,62.6],[7.0,63.0],[8.3,63.5],[9.8,63.9],[10.9,64.6],[12.2,65.3],[12.8,66.0],[13.5,67.0],[14.7,67.8],[15.4,68.3],[16.5,68.6],[17.6,69.3],[18.9,69.7],[20.6,69.9],[22.0,70.2],[23.5,70.5],[25.0,70.9],[26.5,70.9],[28.2,71.0],[29.5,70.6],[31.0,70.3],[32.5,69.9],[34,69.8],[34,46],[-2.2,46],[-2.2,47.1],[-4.4,47.9]],
+ // Zealand (Copenhagen) and Funen
+ [[10.9,55.7],[11.7,55.95],[12.6,56.05],[12.6,55.7],[12.3,55.2],[11.8,55.0],[11.2,55.2]],
+ [[9.7,55.5],[10.5,55.5],[10.7,55.1],[10.2,55.0],[9.8,55.2]]
+];
+var KX = 0.53*15.45, KY = 15.45;
+function px(lon){ return (lon+11)*KX; }
+function py(lat){ return (71.5-lat)*KY; }
+
+/* ---------- State ---------- */
+var total = 0, days = {}, loaded = false, loadError = false, busy = false;
+var otherDay = false, selDate = '', msg = {text:'',kind:''}, lastWin = null, prevLeftPct = null;
+var mineLocal = 0; try { mineLocal = +localStorage.getItem('lapland-mine') || 0; } catch(e) {}
+var seenDoors = {}; try { seenDoors = JSON.parse(localStorage.getItem('lapland-seen') || '{}') || {}; } catch(e) {}
+
+function fmt(n){ return Math.round(n).toLocaleString('en-GB'); }
+function iso(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function fromIso(s){ var p=s.split('-'); return new Date(+p[0],+p[1]-1,+p[2]); }
+function now(){ return new Date(); }
+function todayIso(){ return iso(now()); }
+function dayLabel(d){ return d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'short'}); }
+function short(d){ return d.toLocaleDateString('en-GB',{day:'numeric',month:'short'}); }
+function kmOf(steps){ return steps*STRIDE_KM; }
+function stopIndexReached(km){ var r=0; for (var i=0;i<STOPS.length;i++) if (km>=STOPS[i].km) r=i; return r; }
+function saveLocal(){ try { localStorage.setItem('lapland-mine', String(mineLocal)); localStorage.setItem('lapland-seen', JSON.stringify(seenDoors)); } catch(e) {} }
+
+/* ---------- Pieces ---------- */
+function headerHtml(km){
+  var left = Math.max(0, GOAL_KM-km);
+  var cols=['#E2574C','#F2C14E','#9FD8B8','#FFFFFF'], wire='M0 6 Q 22.5 22 45 6 T 90 6 T 135 6 T 180 6 T 225 6 T 270 6 T 315 6 T 360 6', bulbs='';
+  for (var b=0;b<16;b++){ var bx=11+b*22.5, by=12; bulbs+='<g class="bulb"><rect x="'+(bx-2)+'" y="'+(by-3)+'" width="4" height="4" rx="1" fill="#1B2924"/><ellipse cx="'+bx+'" cy="'+(by+6)+'" rx="4.5" ry="6.5" fill="'+cols[b%4]+'"/></g>'; }
+  var lights = '<div class="lights" aria-hidden="true"><svg viewBox="0 0 360 30" preserveAspectRatio="none"><path d="'+wire+'" fill="none" stroke="#1B2924" stroke-width="1.6"/>'+bulbs+'</svg></div>';
+  var hills = '<svg class="hills" viewBox="0 0 400 34" preserveAspectRatio="none" aria-hidden="true"><path d="M0 22 Q 60 4 120 18 T 240 16 T 400 14 V34 H0 Z" fill="#F6FAF8"/></svg>';
+  return '<header class="band"><div class="snow" aria-hidden="true"></div>'+lights+'<div class="inner"><div><small>\u2605 1 Nov \u2013 19 Dec</small><h1>Walk to Lapland</h1></div>'+
+    '<div class="togo">'+(loaded ? (left>0 ? '<b>'+fmt(left)+' km</b>to Santa' : '<b>Arrived!</b>in Lapland') : '')+'</div></div>'+hills+'</header>';
+}
+
+function dateOptions(){
+  var t=todayIso(), last = t<END_ISO ? t : END_ISO, out=[], d=fromIso(last), first=fromIso(START_ISO);
+  var y = iso(new Date(now().getFullYear(), now().getMonth(), now().getDate()-1));
+  while (d>=first){ var v=iso(d); out.push({v:v, label: v===t?'Today':(v===y?'Yesterday':dayLabel(d))}); d=new Date(d.getFullYear(),d.getMonth(),d.getDate()-1); }
+  return out;
+}
+
+function logHtml(km){
+  var t = todayIso();
+  if (t < START_ISO) return '<section class="card"><h2>We set off on Sunday!</h2><p class="note">Come back on <b>Sunday 1 November</b> to add your first steps. Every step you add moves the whole group closer to Santa.</p></section>';
+  if (t > LOG_CLOSE_ISO) return '<section class="card"><h2>That’s a wrap</h2><p class="note">The walk is over. Thank you for every single step.</p></section>';
+  var opts = dateOptions();
+  if (!otherDay) selDate = opts[0] ? opts[0].v : t;
+  var h = '<section class="card" aria-labelledby="log-h"><h2 id="log-h">'+(selDate===t?'Add today’s steps':'Add steps for '+dayLabel(fromIso(selDate)))+'</h2>';
+  if (lastWin){
+    h += '<div class="win" role="status"><span>Ho ho ho! Nice one!</span><b>+'+fmt(lastWin.steps)+' steps</b><span>You just moved us '+kmOf(lastWin.steps).toFixed(1)+' km closer to Santa.</span>'+
+      (lastWin.key ? '<button class="link" id="undo">Typo? Undo</button>' : '')+'</div>';
+  }
+  h += '<div class="steps-box"><input id="steps-in" type="number" inputmode="numeric" pattern="[0-9]*" min="1" max="60000" placeholder="0" aria-label="Your steps">'+
+       '<button class="btn" id="log-btn"'+(busy?' disabled':'')+'>Add my steps</button></div>';
+  h += '<p class="msg'+(msg.kind?' '+msg.kind:'')+'" id="msg" role="status">'+msg.text+'</p>';
+  h += '<div class="day-row">'+(otherDay ?
+      '<label for="date-in">Day:</label><select id="date-in">'+opts.map(function(o){ return '<option value="'+o.v+'"'+(o.v===selDate?' selected':'')+'>'+o.label+'</option>'; }).join('')+'</select> <button class="link" id="today-link">Back to today</button>' :
+      'Forgot a day? <button class="link" id="other-day">Add it here</button>')+'</div>';
+  // steps left to Lapland: a candy cane bar that shrinks every time someone adds steps
+  var goalSteps = Math.round(GOAL_KM/STRIDE_KM), leftSteps = Math.max(0, goalSteps - total);
+  var leftPct = loaded ? leftSteps/goalSteps*100 : 100;
+  var fromPct = prevLeftPct == null ? leftPct : prevLeftPct;
+  h += '<div class="today"><div class="today-top"><span>Steps left to Lapland</span><span class="left-num">'+(loaded?fmt(leftSteps):'\u2026')+'</span></div>'+
+       '<div class="mini" role="progressbar" aria-label="Steps left to Lapland" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+Math.round(leftPct)+'"><span id="left-bar" style="width:'+fromPct.toFixed(2)+'%" data-to="'+leftPct.toFixed(2)+'"></span></div>'+
+       '<p class="note">'+(leftSteps>0 ? 'Every step you add makes this shrink.' : 'We did it. Santa\u2019s putting the kettle on.')+(mineLocal ? ' You\u2019ve added <b>'+fmt(mineLocal)+'</b> steps from this phone.' : '')+'</p></div>';
+  if (loaded) prevLeftPct = leftPct;
+  return h + '</section>';
+}
+
+function walkerAt(km){
+  var k = Math.min(km, GOAL_KM);
+  for (var i=1;i<STOPS.length;i++){
+    var a=STOPS[i-1], b=STOPS[i];
+    if (k <= b.km){ var f=(k-a.km)/(b.km-a.km); return {x:px(a.lon)+(px(b.lon)-px(a.lon))*f, y:py(a.lat)+(py(b.lat)-py(a.lat))*f, seg:i}; }
+  }
+  var l=STOPS[STOPS.length-1]; return {x:px(l.lon), y:py(l.lat), seg:STOPS.length};
+}
+
+function mapSvg(km){
+  var w = walkerAt(km);
+  var s = '<svg viewBox="0 0 360 372" role="img" aria-label="Map of our route from Bedfordshire to Rovaniemi in Lapland">';
+  s += '<rect width="360" height="372" fill="var(--sea)"/>';
+  // Arctic Circle
+  s += '<line x1="0" y1="'+py(66.56).toFixed(1)+'" x2="360" y2="'+py(66.56).toFixed(1)+'" stroke="#9DBFAE" stroke-width="1" stroke-dasharray="3 5"/>';
+  s += '<text class="sea-l" x="8" y="'+(py(66.56)-5).toFixed(1)+'">ARCTIC CIRCLE</text>';
+  LAND.forEach(function(poly){
+    s += '<path d="M'+poly.map(function(p){ return px(p[0]).toFixed(1)+' '+py(p[1]).toFixed(1); }).join('L')+'Z" fill="var(--white)" stroke="var(--line)" stroke-width="1.2" stroke-linejoin="round"/>';
+  });
+  [['UK',-2.4,54.2],['France',1.6,48.0],['Germany',11.0,51.3],['Norway',8.4,61.4],['Sweden',14.6,63.6],['Finland',27.2,62.8],['Poland',19.5,52.0]].forEach(function(c){
+    s += '<text class="country" x="'+px(c[1]).toFixed(1)+'" y="'+py(c[2]).toFixed(1)+'" text-anchor="middle">'+c[0]+'</text>';
+  });
+  s += '<text class="sea-l" x="'+px(3.2).toFixed(1)+'" y="'+py(56.2).toFixed(1)+'" text-anchor="middle">NORTH SEA</text>';
+  s += '<text class="sea-l" x="'+px(19.6).toFixed(1)+'" y="'+py(57.2).toFixed(1)+'" text-anchor="middle">BALTIC</text>';
+  // full route, then the part we've walked
+  var all = STOPS.map(function(p){ return px(p.lon).toFixed(1)+','+py(p.lat).toFixed(1); }).join(' ');
+  s += '<polyline points="'+all+'" fill="none" stroke="var(--green-mid)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 7" opacity=".7"/>';
+  var done = STOPS.slice(0,w.seg).map(function(p){ return px(p.lon).toFixed(1)+','+py(p.lat).toFixed(1); }).concat([w.x.toFixed(1)+','+w.y.toFixed(1)]).join(' ');
+  if (km>0) s += '<polyline points="'+done+'" fill="none" stroke="var(--green)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>';
+  // flag at Rovaniemi
+  var fx = px(STOPS[7].lon), fy = py(STOPS[7].lat);
+  s += '<rect x="'+(fx-1.5)+'" y="'+(fy-34)+'" width="3" height="34" rx="1.5" fill="var(--ink)"/><path d="M'+(fx+1.5)+' '+(fy-33)+' L'+(fx+26)+' '+(fy-26)+' L'+(fx+1.5)+' '+(fy-19)+' Z" fill="var(--red)"/>';
+  // stops
+  STOPS.forEach(function(p,i){
+    var x=px(p.lon), y=py(p.lat), got = km>=p.km;
+    s += '<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="'+(i===0?4:5.5)+'" fill="'+(got?'var(--gold)':'var(--white)')+'" stroke="'+(got?'#8A6416':'var(--green)')+'" stroke-width="2"/>';
+    if (i>0) s += '<text class="c-label'+(got?'':' dim')+'" x="'+(x+p.lx).toFixed(1)+'" y="'+(y+p.ly).toFixed(1)+'" text-anchor="'+p.a+'">'+p.name+'</text>';
+  });
+  // walker
+  if (km>0 && km<GOAL_KM){
+    s += '<circle cx="'+w.x.toFixed(1)+'" cy="'+w.y.toFixed(1)+'" r="11" fill="var(--red)" stroke="var(--white)" stroke-width="3"/>';
+    s += '<text x="'+w.x.toFixed(1)+'" y="'+(w.y+4).toFixed(1)+'" text-anchor="middle" font-size="11" fill="#fff" font-family="var(--body)" font-weight="700">★</text>';
+  }
+  return s + '</svg>';
+}
+
+function mapHtml(km){
+  var at = stopIndexReached(km), next = STOPS[at+1];
+  var big = !loaded ? (loadError ? 'Couldn’t load our steps. Check your connection and refresh.' : 'Finding us on the map…') :
+    km<=0 ? 'Ready to leave <em>Bedfordshire</em>' :
+    !next ? 'We made it to <em>Lapland!</em>' :
+    'Next stop: <em>'+next.name+'</em>, '+fmt(next.km-km)+' km away';
+  var pct = Math.min(100, km/GOAL_KM*100);
+  var ticks = STOPS.slice(1,-1).map(function(p){ return '<span class="tick'+(km>=p.km?' on':'')+'" style="left:'+(p.km/GOAL_KM*100).toFixed(2)+'%"></span>'; }).join('');
+  var stops = STOPS.slice(1).map(function(p,j){
+    var i=j+1, got = km>=p.km, isNext = !got && i===at+1;
+    var right = got ? 'Stamped' : isNext ? fmt(p.km-km)+' km to go' : fmt(p.km)+' km';
+    var sub = got ? p.fact : p.country;
+    return '<li class="stop'+(got?' got':'')+(isNext?' next':'')+'"><span class="stamp" aria-hidden="true">'+(got?'✓':i)+'</span>'+
+      '<span><span class="stop-name">'+p.name+'</span><br><span class="stop-fact">'+sub+'</span></span><span class="stop-km">'+right+'</span></li>';
+  }).join('');
+  return '<section class="card" aria-labelledby="map-h"><div class="where"><h2 id="map-h">Where we are</h2><p class="big">'+big+'</p></div>'+
+    '<div class="mapbox">'+mapSvg(km)+'</div>'+
+    '<div class="prog"><div class="prog-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+Math.floor(pct)+'" aria-label="Distance to Lapland"><span class="fill" style="width:'+pct.toFixed(2)+'%"></span>'+ticks+'</div>'+
+    '<div class="prog-ends"><span>'+fmt(km)+' km walked</span><span>'+fmt(GOAL_KM)+' km to Santa</span></div></div>'+
+    '<ul class="stops">'+stops+'</ul></section>';
+}
+
+function doorOpen(i){ return PREVIEW || now() >= DOORS[i].start; }
+function doorsHtml(){
+  var tiles = DOORS.map(function(d,i){
+    var open = doorOpen(i), isNew = open && !seenDoors[i] && !PREVIEW;
+    return '<button class="door'+(open?'':' locked')+(isNew?' new':'')+'" data-door="'+i+'"'+(open?'':' aria-disabled="true"')+
+      ' aria-label="Door '+(i+1)+(open?'':', opens '+short(d.start))+'">'+'<svg class="bow" viewBox="0 0 44 22" aria-hidden="true"><path d="M22 12 C 12 0, 2 4, 6 12 C 9 18, 18 15, 22 12 C 26 15, 35 18, 38 12 C 42 4, 32 0, 22 12 Z" fill="'+(open?'#D9A441':'#B5C6BD')+'"/><circle cx="22" cy="12" r="4" fill="'+(open?'#B88A2E':'#9DB3A8')+'"/></svg>'+'<span class="num">'+(i+1)+'</span>'+
+      '<span class="lbl">'+(open ? (isNew?'New! Tap to open':(seenDoors[i]?'Open again':'Tap to open')) : 'Opens '+short(d.start))+'</span></button>';
+  });
+  var pOpen = PREVIEW || todayIso() >= POCKET_ISO;
+  tiles.push('<button class="door'+(pOpen?'':' locked')+'" data-door="pocket"'+(pOpen?'':' aria-disabled="true"')+' aria-label="Christmas pocket card">'+'<svg class="bow" viewBox="0 0 44 22" aria-hidden="true"><path d="M22 12 C 12 0, 2 4, 6 12 C 9 18, 18 15, 22 12 C 26 15, 35 18, 38 12 C 42 4, 32 0, 22 12 Z" fill="'+(pOpen?'#D9A441':'#B5C6BD')+'"/><circle cx="22" cy="12" r="4" fill="'+(pOpen?'#B88A2E':'#9DB3A8')+'"/></svg>'+'<span class="num">\u2605</span><span class="lbl">'+(pOpen?'Pocket card':'Opens 20 Dec')+'</span></button>');
+  return '<section class="card" aria-labelledby="doors-h"><h2 id="doors-h">The doors</h2><p class="note">A new present to unwrap every Sunday: a little rhyme and the tool to focus on that week.</p><div class="doors">'+tiles.join('')+'</div></section>';
+}
+
+function render(){
+  var focusId = document.activeElement && document.activeElement.id;
+  var km = kmOf(total);
+  document.getElementById('app').innerHTML = headerHtml(km)+
+    '<main class="inner">'+logHtml(km)+mapHtml(km)+doorsHtml()+
+    '<p class="foot">Made with love by Kelli \u2764\uFE0F</p></main>';
+  wire();
+  if (focusId){ var f=document.getElementById(focusId); if (f) f.focus(); }
+  var lb = document.getElementById('left-bar');
+  if (lb && lb.style.width !== lb.getAttribute('data-to')+'%'){ void lb.offsetWidth; requestAnimationFrame(function(){ lb.style.width = lb.getAttribute('data-to')+'%'; }); }
+}
+
+function setMsg(text, kind){ msg={text:text,kind:kind||''}; var m=document.getElementById('msg'); if (m){ m.textContent=text; m.className='msg'+(kind?' '+kind:''); } }
+
+function confetti(){
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var box=document.createElement('div'); box.className='confetti'; box.setAttribute('aria-hidden','true');
+  var cols=['#2E5B4C','#4E8170','#D9A441','#C8553D','#DCEBE3'];
+  for (var i=0;i<46;i++){ var c=document.createElement('i'); c.style.left=(Math.random()*100)+'%'; c.style.background=cols[i%cols.length]; c.style.animationDelay=(Math.random()*.5)+'s'; c.style.animationDuration=(1.4+Math.random()*1.2)+'s'; box.appendChild(c); }
+  document.body.appendChild(box); setTimeout(function(){ box.remove(); }, 3200);
+}
+
+function wire(){
+  var lb=document.getElementById('log-btn'), si=document.getElementById('steps-in');
+  if (lb){
+    var go=function(){
+      if (busy) return;
+      var v=si.value.trim().replace(/[,\s]/g,'');
+      if (!/^\d+$/.test(v) || +v<1){ setMsg('Pop your steps in as a number, like 7200.','err'); si.focus(); return; }
+      if (+v>60000){ setMsg('That’s more than 60,000. Check the number and try again.','err'); return; }
+      send(+v);
+    };
+    lb.addEventListener('click', go); si.addEventListener('keydown', function(e){ if (e.key==='Enter') go(); });
+  }
+  var od=document.getElementById('other-day'); if (od) od.addEventListener('click', function(){ otherDay=true; var o=dateOptions(); selDate=o[1]?o[1].v:o[0].v; lastWin=null; msg={text:'',kind:''}; render(); });
+  var tl=document.getElementById('today-link'); if (tl) tl.addEventListener('click', function(){ otherDay=false; lastWin=null; msg={text:'',kind:''}; render(); });
+  var di=document.getElementById('date-in'); if (di) di.addEventListener('change', function(){ selDate=di.value; render(); });
+  var un=document.getElementById('undo'); if (un) un.addEventListener('click', undo);
+  Array.prototype.forEach.call(document.querySelectorAll('[data-door]'), function(b){
+    b.addEventListener('click', function(){ if (b.getAttribute('aria-disabled')==='true') return; openDoor(b.getAttribute('data-door')); });
+  });
+}
+
+var dlg=document.getElementById('dlg'), dlgBody=document.getElementById('dlg-body');
+function openDoor(k){
+  var h;
+  if (k==='pocket'){
+    h = '<div class="dlg-card"><button class="x" data-close aria-label="Close">×</button><span class="tag">For the break</span><h3 id="dlg-title">Your Christmas pocket card</h3><p class="sig">Screenshot me and keep me handy.</p></div>'+
+      '<div class="dlg-body"><ul class="pocket-list">'+
+      '<li><b>Hunger scale:</b> check your number before you eat.</li>'+
+      '<li><b>Surf the urge:</b> notice it, breathe, ride the wave. Riding it out is the win.</li>'+
+      '<li><b>Tapping:</b> one round when the noise gets loud.</li>'+
+      '<li><b>Meet the part:</b> what do I actually need?</li>'+
+      '<li><b>Critic swap:</b> answer it like your best friend would.</li>'+
+      '<li><b>Values:</b> who do I want to be at this table?</li>'+
+      '<li><b>Self-trust:</b> it’s just food. I can trust myself.</li></ul>'+
+      '<div class="week">No January reset. See you in the new year.</div><button class="btn soft" data-close>Close</button></div>';
+  } else {
+    var i=+k, d=DOORS[i];
+    seenDoors[i]=true; saveLocal();
+    h = '<div class="dlg-card"><button class="x" data-close aria-label="Close">×</button><span class="tag">Door '+(i+1)+' · Walk to Lapland</span>'+
+      '<p class="verse" id="dlg-title">'+d.verse+'</p><p class="ask">'+d.ask+'</p><p class="sig">Kelli Nutrition Coach</p></div>'+
+      '<div class="dlg-body"><button class="btn" id="reveal">Reveal the answer</button>'+
+      '<div id="answer" hidden style="display:flex;flex-direction:column;gap:12px"><span class="answer-tag">The answer</span><h4 tabindex="-1">'+d.answer+'</h4><p>'+d.recap+'</p>'+(d.taps ? '<ol class="taps">'+d.taps.map(function(t){ return '<li><b>'+t[0]+':</b> '+t[1]+'</li>'; }).join('')+'</ol>' : '')+'<div class="week">This week: '+d.week+'</div><button class="btn soft" data-close>Close</button></div></div>';
+  }
+  dlgBody.innerHTML=h;
+  Array.prototype.forEach.call(dlgBody.querySelectorAll('[data-close]'), function(b){ b.addEventListener('click', function(){ dlg.close(); }); });
+  var r=document.getElementById('reveal');
+  if (r) r.addEventListener('click', function(){ r.hidden=true; var a=document.getElementById('answer'); a.hidden=false; a.querySelector('h4').focus(); });
+  if (typeof dlg.showModal==='function') dlg.showModal(); else dlg.setAttribute('open','');
+}
+dlg.addEventListener('click', function(e){ if (e.target===dlg) dlg.close(); });
+dlg.addEventListener('close', function(){ render(); });
+
+function send(n){
+  busy=true; setMsg('Adding your steps…'); var lb=document.getElementById('log-btn'); if (lb) lb.disabled=true;
+  var before = stopIndexReached(kmOf(total));
+  fetch(API,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({date:selDate,steps:n})})
+    .then(function(r){ return r.json().then(function(j){ return {ok:r.ok,j:j}; }); })
+    .then(function(res){
+      busy=false;
+      if (!res.ok){ msg={text:(res.j&&res.j.error)||'Couldn’t add your steps. Try again.',kind:'err'}; render(); return; }
+      total+=n; days[selDate]=(days[selDate]||0)+n; mineLocal+=n; saveLocal();
+      lastWin={steps:n,key:res.j.key,date:selDate}; msg={text:'',kind:''};
+      var after = stopIndexReached(kmOf(total));
+      if (after>before){ lastWin.city = STOPS[after].name; msg={text:'We’ve reached '+STOPS[after].name+'! Another stamp in the passport.',kind:''}; }
+      render(); confetti();
+    })
+    .catch(function(){ busy=false; msg={text:'Couldn’t reach the server. Check your connection and try again.',kind:'err'}; render(); });
+}
+
+function undo(){
+  if (!lastWin || !lastWin.key || busy) return;
+  busy=true; var w=lastWin;
+  fetch(API+'?key='+encodeURIComponent(w.key),{method:'DELETE'})
+    .then(function(r){ if (!r.ok) throw new Error('bad'); })
+    .then(function(){ busy=false; total-=w.steps; days[w.date]=Math.max(0,(days[w.date]||0)-w.steps); mineLocal=Math.max(0,mineLocal-w.steps); saveLocal(); lastWin=null; msg={text:'Undone. Pop the right number in.',kind:''}; render(); var s=document.getElementById('steps-in'); if (s) s.focus(); })
+    .catch(function(){ busy=false; msg={text:'Couldn’t undo that. Try again.',kind:'err'}; render(); });
+}
+
+function load(){
+  fetch(API,{cache:'no-store'})
+    .then(function(r){ if (!r.ok) throw new Error('bad'); return r.json(); })
+    .then(function(j){ total=+j.total||0; days=j.days||{}; loaded=true; loadError=false; if (!busy && !dlg.open) render(); })
+    .catch(function(){ loadError=!loaded; if (!busy && !dlg.open) render(); });
+}
+
+render();
+load();
+setInterval(function(){ var a=document.activeElement&&document.activeElement.id; if (!document.hidden && !busy && !dlg.open && a!=='steps-in' && a!=='date-in') load(); }, 60000);
+})();
+</script>
+</body>
+</html>
